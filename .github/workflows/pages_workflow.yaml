@@ -1,0 +1,35 @@
+name: Publish to GitHub Pages
+
+on: pull_request
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Build and publish Folder 1
+        run: |
+          cd folder1
+          mkdir temp
+          cp -R ./* temp/
+        # Publish the contents of the temporary folder to the "gh-pages" branch
+        - name: Publish Folder 1
+          uses: peaceiris/actions-gh-pages@v3
+          with:
+            github_token: ${{ secrets.GITHUB_TOKEN }}
+            publish_branch: gh-pages
+            publish_dir: ./temp
+
+      # Publish folder 2
+      - name: Build and publish Folder 2
+        run: |
+          cd folder2
+          mkdir temp
+          cp -R ./*.html temp/
+        # Publish the contents of the temporary folder to the "gh-pages" branch
+        - name: Publish Folder 2
+          uses: peaceiris/actions-gh-pages@v3
+          with:
+            github_token: ${{ secrets.GITHUB_TOKEN }}
+            publish_branch: gh-pages
+            publish_dir: ./temp
