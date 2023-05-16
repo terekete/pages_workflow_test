@@ -1,14 +1,9 @@
 name: Publish to GitHub Pages
 
-on:
-  pull_request:
-    branches:
-      - main
-
+on: pull_request
 jobs:
   build-and-publish:
     runs-on: ubuntu-latest
-    
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
