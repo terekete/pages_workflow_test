@@ -1,0 +1,48 @@
+name: Publish to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # Publish folder 1
+      - name: Build and publish Folder 1
+        run: |
+          cd folder1
+          # Build your folder 1 if necessary
+          # For example, if it's a static site, you might use a static site generator
+          # and generate the output files here.
+          # Then, copy the generated files to a temporary location
+          mkdir temp
+          cp -R ./* temp/
+        # Publish the contents of the temporary folder to the "gh-pages" branch
+        - name: Publish Folder 1
+          uses: peaceiris/actions-gh-pages@v3
+          with:
+            github_token: ${{ secrets.GITHUB_TOKEN }}
+            publish_branch: gh-pages
+            publish_dir: ./temp
+
+      # Publish folder 2
+      - name: Build and publish Folder 2
+        run: |
+          cd folder2
+          # Build your folder 2 if necessary
+          # Copy the generated files to a temporary location
+          mkdir temp
+          cp -R ./* temp/
+        # Publish the contents of the temporary folder to the "gh-pages" branch
+        - name: Publish Folder 2
+          uses: peaceiris/actions-gh-pages@v3
+          with:
+            github_token: ${{ secrets.GITHUB_TOKEN }}
+            publish_branch: gh-pages
+            publish_dir: ./temp
